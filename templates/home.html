@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block head %}
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='home.css')}}">
+{% endblock %}
+
+{% block title %}Test{% endblock %}
+{% block content %}
+<div class="right content-page mainpage">
+  <div class="body content rows scroll-y">
+    <div class="box-info full">
+      <h2 class="mt-4">{{greeting}}</h2>
+      <h2>Charges</h2>
+      <br>
+      <div class="panel-body pt-0">
+<!--        <div class="row mb-4">-->
+<!--          <div class="col-sm-12">-->
+<!--            <a href="add_charge"><button type="button" class="btn">Add new charge</button></a>-->
+<!--            <a href="login"><button type="button" class="btn">Login</button></a>-->
+<!--            <a href="logout"><button type="button" class="btn">Logout</button></a>-->
+<!--          </div>-->
+<!--        </div>-->
+        <table class="table table-bordered myTable" id="chargeTable">
+          <thead>
+            <th onclick="sortTable(0)">Category   <i id="0" class="arrow up" style="display: none"></i></th>
+            <th onclick="sortTable(1)">Vendor   <i id="1" class="arrow up" style="display: none"></i></th>
+            <th onclick="sortTable(2)">Charge   <i id="2" class="arrow up" style="display: none"></i></th>
+            <th onclick="sortTable(3)">Card   <i id="3" class="arrow up" style="display: none"></i></th>
+            <th onclick="sortTable(4)">Date   <i id="4" class="arrow up"></i></th>
+<!--            <th>Action</th>-->
+          </thead>
+          <tbody>
+            {% for charge in spending %}
+                <tr>
+                  <td align="center">{{charge['Category']}}</td>
+                  <td align="center">{{charge['Vendor']}}</td>
+                  <td align="center">${{charge['Charge']}}</td>
+                  <td align="center">{{charge['Card']}}</td>
+                  <td align="center">{{charge['Date']}}</td>
+<!--                  <td align="center">-->
+<!--                    <form method="post" action="{{ url_for('delete_charge', charge_id=charge['Charge ID']) }}">-->
+<!--                      <input type="submit" class="btn delete-button" name="delete" value="Delete">-->
+<!--                    </form>-->
+<!--                  </td>-->
+                </tr>
+              {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

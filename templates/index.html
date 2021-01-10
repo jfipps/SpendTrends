@@ -1,0 +1,35 @@
+{ % extends "base.html" %}
+
+{% block head %}
+  <link rel="stylesheet" href="{{url_for('static', filename='home.css')}}">
+{% endblock %}
+
+{% block title %}Test{% endblock %}
+{% block content %}
+  <div class="right content-page">
+    <div class="body content rows scroll-y">
+      <div class="box-info full">
+        <h2>Charges</h2>
+        <div class="panel-body pt-0">
+          <div class="row mb-4">
+            <div class="col-sm-12">
+              <button>Add new charge</button>
+            </div>
+          </div>
+          <table class="table table-bordered">
+            <thead>
+              <th>Charge ID</th>
+              <th>Vendor</th>
+              <th>Charge</th>
+              <th>Card</th>
+              <th>Date</th>
+            </thead>
+            <tbody>
+              
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,46 @@
+button {
+    float: none !important;
+    display: inline;
+}
+
+th, td, thead, tbody {
+    text-align: center;
+    border: 1px solid black;
+}
+
+body {
+    background-color: #435165;
+  	margin: 0;
+  	padding: 0;
+  	font-family: 'Roboto', sans-serif;
+
+}
+
+table {
+    background-color: #c7c3c3;
+}
+
+.btn {
+    background-color: #c7c3c3;
+}
+
+.delete-button {
+    background-color: #435165;
+}
+
+.arrow {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+.up {
+  transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+}
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
+}
