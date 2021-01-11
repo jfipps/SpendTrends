@@ -46,6 +46,43 @@
               {% endfor %}
           </tbody>
         </table>
+        <button type="button" class="btn" data-toggle="modal" data-target="#filterModal">Filter</button>
+          <!-- Modal -->
+          <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle">Filter</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form method="post" action="{{ url_for('add_charge')}}">
+                      <label for="category">Category</label><br>
+                      <input type="text" id="category" name="category" value=""><br>
+                      <label for="vendor">Vendor</label><br>
+                      <input type="text" id="vendor" name="vendor" value=""><br>
+                      <label for="charge">Charge</label><br>
+                      <input type="text" id="charge" name="charge" value=""><br>
+                      <label for="card">Card</label><br>
+                      <input type="text" id="card" name="card" value=""><br>
+                      <label for="dateSelect">Date</label><br>
+                      <select name="dateSelect" id="dateSelect">
+                          <option value="1 day">Day</option>
+                          <option value="7 days">7 Days</option>
+                          <option value="30 days">30 Days</option>
+                          <option value="1 year">1 Year</option>
+                      </select>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                      <input type="submit" class="btn btn-primary" value="Submit">
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
       </div>
     </div>
   </div>

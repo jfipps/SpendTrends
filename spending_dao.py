@@ -17,8 +17,9 @@ def get_all_charges(connection, user):
                 'UserID': UserID
             }
         )
-
     return response
+
+# def get_filtered_charges(connection, user, )
 
 def insert_new_charge(connection, charge):
     cursor = connection.cursor()
