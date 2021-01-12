@@ -19,7 +19,9 @@ def get_all_charges(connection, user):
         )
     return response
 
-# def get_filtered_charges(connection, user, )
+def get_filtered_charges(connection, filterOptions, user):
+    for item in filterOptions:
+        print(item)
 
 def insert_new_charge(connection, charge):
     cursor = connection.cursor()

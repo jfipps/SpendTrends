@@ -8,7 +8,7 @@ app.secret_key = 'thisisakey'
 connection = get_sql_connection()
 
 @app.route("/", methods=["GET", "POST"])
-@app.route("/home", methods=['GET', 'POST'])
+@app.route("/home", methods=["GET", "POST"])
 def home():
     # if request.method == "GET" and session['greeting']:
     #     spending = spending_dao.get_all_charges(connection, session['id'])
@@ -21,10 +21,21 @@ def home():
     #     return render_template("home.html", spending=spending, greeting=greeting)
     # if request.method == "GET" and not session['loggedin']:
     #     return redirect(url_for("login"))
-    session['id'] = 2
-    spending = spending_dao.get_all_charges(connection, 2)
-    sortedSpend = sorted(spending, key=lambda k: k['Date'], reverse=True)
-    return render_template("home.html", spending=sortedSpend, greeting="")
+    if request.method == "GET":
+        session['id'] = 2
+        spending = spending_dao.get_all_charges(connection, 2)
+        sortedSpend = sorted(spending, key=lambda k: k['Date'], reverse=True)
+        return render_template("home.html", spending=sortedSpend, greeting="")
+    if request.method == "POST":
+        filter_data = {
+            'category': request.form['category'],
+            'vendor': request.form['vendor'],
+            'card': request.form['card'],
+            'date': request.form['dateSelect']
+        }
+        for item in filter_data:
+            print(filter_data[item])
+        return render_template("login.html")
 
 
 @app.route("/delete_charge/<charge_id>", methods=["POST"])
@@ -45,6 +56,8 @@ def add_charge():
             'date': request.form['date'],
             'userID': session['id']
         }
+        for item in input_data:
+            print(item)
         spending_dao.insert_new_charge(connection, input_data)
         return redirect(url_for('home'))
 
