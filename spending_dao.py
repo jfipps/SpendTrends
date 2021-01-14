@@ -20,8 +20,32 @@ def get_all_charges(connection, user):
     return response
 
 def get_filtered_charges(connection, filterOptions, user):
+    query_where_string = []
     for item in filterOptions:
-        print(item)
+        if filterOptions[item] != "" and item != "date":
+            query_where_string.append(" " + item + " = " + "'" + filterOptions[item] + "'")
+        if filterOptions[item] != "" and item == "date":
+            query_where_string.append(" " + item + " BETWEEN DATE(NOW()) - INTERVAL " + filterOptions[item] + " AND DATE(NOW())")
+    cursor = connection.cursor()
+    query = "SELECT * FROM spendingtrends.spending WHERE userID = " + str(user) + " AND"
+    for string in query_where_string:
+        query = query + string + " AND"
+    query = query.rsplit(' AND', 1)[0]
+    cursor.execute(query)
+    response = []
+    for (ChargeID, Category, Vendor, Charge, Card, Date, UserID) in cursor:
+        response.append(
+            {
+                'Charge ID': ChargeID,
+                'Category': Category,
+                'Vendor': Vendor,
+                'Charge': Charge,
+                'Card': Card,
+                'Date': Date,
+                'UserID': UserID
+            }
+        )
+    return response
 
 def insert_new_charge(connection, charge):
     cursor = connection.cursor()

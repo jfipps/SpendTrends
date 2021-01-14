@@ -33,9 +33,10 @@ def home():
             'card': request.form['card'],
             'date': request.form['dateSelect']
         }
-        for item in filter_data:
-            print(filter_data[item])
-        return render_template("login.html")
+        filtered_spending = spending_dao.get_filtered_charges(connection, filter_data, 2)
+        for item in filtered_spending:
+            print(item)
+        return render_template("home.html", spending=filtered_spending, greeting="")
 
 
 @app.route("/delete_charge/<charge_id>", methods=["POST"])
