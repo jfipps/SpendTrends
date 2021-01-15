@@ -22,6 +22,7 @@
 <!--        </div>-->
         <table class="table table-bordered myTable" id="chargeTable">
           <thead>
+            <th><input type="checkbox" id="check_all" onclick="toggle(this)"></th>
             <th onclick="sortTable(0)">Category   <i id="0" class="arrow up" style="display: none"></i></th>
             <th onclick="sortTable(1)">Vendor   <i id="1" class="arrow up" style="display: none"></i></th>
             <th onclick="sortTable(2)">Charge   <i id="2" class="arrow up" style="display: none"></i></th>
@@ -30,23 +31,20 @@
 <!--            <th>Action</th>-->
           </thead>
           <tbody>
-            {% for charge in spending %}
-                <tr>
-                  <td align="center">{{charge['Category']}}</td>
-                  <td align="center">{{charge['Vendor']}}</td>
-                  <td align="center">${{charge['Charge']}}</td>
-                  <td align="center">{{charge['Card']}}</td>
-                  <td align="center">{{charge['Date']}}</td>
-<!--                  <td align="center">-->
-<!--                    <form method="post" action="{{ url_for('delete_charge', charge_id=charge['Charge ID']) }}">-->
-<!--                      <input type="submit" class="btn delete-button" name="delete" value="Delete">-->
-<!--                    </form>-->
-<!--                  </td>-->
+            {% for x in range(0, spending|length) %}
+                <tr id="row{{x}}" onclick="highlightRow({{x}})" class="">
+                  <td><input type="checkbox" name="row_check" value="{{x['ChargeID']}}"></td>
+                  <td align="center">{{spending[x]['Category']}}</td>
+                  <td align="center">{{spending[x]['Vendor']}}</td>
+                  <td align="center">${{spending[x]['Charge']}}</td>
+                  <td align="center">{{spending[x]['Card']}}</td>
+                  <td align="center">{{spending[x]['Date']}}</td>
                 </tr>
-              {% endfor %}
+            {% endfor %}
           </tbody>
         </table>
         <button type="button" class="btn" data-toggle="modal" data-target="#filterModal">Filter</button>
+        <button id="deleteButton" data-toggle="modal" data-target="#deleteModal" class="btn" style="display: none">Delete</button>
           <!-- Modal -->
           <div class="modal fade" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
@@ -75,6 +73,28 @@
                           <option value="30 DAY">30 Days</option>
                           <option value="365 DAY">1 Year</option>
                       </select>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                      <input type="submit" class="btn btn-primary" value="Submit">
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Modal -->
+          <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLongTitle2">Delete</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form method="post" action="{{ url_for('home')}}">
+                    <h3>Delete selected charges?</h3>  
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                       <input type="submit" class="btn btn-primary" value="Submit">

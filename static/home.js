@@ -1,3 +1,5 @@
+var selectedRows = []
+
 function arrowLogic(n) {
     table = document.getElementById("chargeTable");
     rows = table.rows;
@@ -62,5 +64,33 @@ function sortTable(n) {
                 switching = true;
             }
         }
+    }
+}
+
+function highlightRow(n) {
+    row = document.getElementById("row" + n);
+    if (row.classList.contains("selected")) {
+        row.classList.remove("selected");
+        var index = selectedRows.indexOf("row" + n);
+        if (index > -1) {
+            selectedRows.splice(index, 1);
+        }
+    }
+    else {
+        row.classList.add("selected");
+        selectedRows.push(row.id);
+    }
+    if (selectedRows.length > 0) {
+        document.getElementById("deleteButton").style.display = "";
+    }
+    else {
+        document.getElementById("deleteButton").style.display = "none";
+    }
+}
+
+function toggle(source) {
+    checkboxes = document.getElementsByName("row_check");
+    for(i=0; i < checkboxes.length; i++) {
+        checkboxes[i].checked = source.checked;
     }
 }
