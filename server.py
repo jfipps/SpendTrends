@@ -104,6 +104,11 @@ def logout():
     session.pop('greeting', None)
     return redirect(url_for("login"))
 
+@app.route("/test", methods=["POST"])
+def test():
+    print(request.form.getlist("row_check"))
+    return "Done"
+
 if __name__ == "__main__":
     print("Startng Flask server on port 5001")
     app.run(port=5002)

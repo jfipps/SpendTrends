@@ -67,17 +67,17 @@ function sortTable(n) {
     }
 }
 
-function highlightRow(n) {
+function checklist(n) {
     row = document.getElementById("row" + n);
     if (row.classList.contains("selected")) {
-        row.classList.remove("selected");
+//        row.classList.remove("selected");
         var index = selectedRows.indexOf("row" + n);
         if (index > -1) {
             selectedRows.splice(index, 1);
         }
     }
     else {
-        row.classList.add("selected");
+//        row.classList.add("selected");
         selectedRows.push(row.id);
     }
     if (selectedRows.length > 0) {
@@ -93,4 +93,9 @@ function toggle(source) {
     for(i=0; i < checkboxes.length; i++) {
         checkboxes[i].checked = source.checked;
     }
+}
+
+function deleteFormSubmit() {
+    var form = document.getElementById("deleteForm");
+    form.submit();
 }

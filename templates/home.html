@@ -31,16 +31,18 @@
 <!--            <th>Action</th>-->
           </thead>
           <tbody>
-            {% for x in range(0, spending|length) %}
-                <tr id="row{{x}}" onclick="highlightRow({{x}})" class="">
-                  <td><input type="checkbox" name="row_check" value="{{x['ChargeID']}}"></td>
-                  <td align="center">{{spending[x]['Category']}}</td>
-                  <td align="center">{{spending[x]['Vendor']}}</td>
-                  <td align="center">${{spending[x]['Charge']}}</td>
-                  <td align="center">{{spending[x]['Card']}}</td>
-                  <td align="center">{{spending[x]['Date']}}</td>
-                </tr>
-            {% endfor %}
+            <form id="deleteForm" action="{{url_for('test')}}" method="post">
+                {% for x in range(0, spending|length) %}
+                    <tr class="">
+                      <td><input id="row{{x}}" onclick="checklist({{x}})" type="checkbox" name="row_check" value="{{spending[x]['Charge ID']}}"></td>
+                      <td align="center">{{spending[x]['Category']}}</td>
+                      <td align="center">{{spending[x]['Vendor']}}</td>
+                      <td align="center">${{spending[x]['Charge']}}</td>
+                      <td align="center">{{spending[x]['Card']}}</td>
+                      <td align="center">{{spending[x]['Date']}}</td>
+                    </tr>
+                {% endfor %}
+            </form>
           </tbody>
         </table>
         <button type="button" class="btn" data-toggle="modal" data-target="#filterModal">Filter</button>
@@ -93,11 +95,11 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form method="post" action="{{ url_for('home')}}">
+                  <form method="post" action="{{ url_for('test')}}">
                     <h3>Delete selected charges?</h3>  
                     <div class="modal-footer">
+                      <button type="button" class="btn" onclick="deleteFormSubmit()">Delete</button>
                       <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                      <input type="submit" class="btn btn-primary" value="Submit">
                     </div>
                   </form>
                 </div>
