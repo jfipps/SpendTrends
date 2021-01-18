@@ -39,9 +39,10 @@ def home():
         return render_template("home.html", spending=filtered_spending, greeting="")
 
 
-@app.route("/delete_charge/<charge_id>", methods=["POST"])
-def delete_charge(charge_id):
-    spending_dao.delete_charge(connection, charge_id)
+@app.route("/delete_charges", methods=["POST"])
+def delete_charges():
+    charges = request.form.getlist("row_check")
+    spending_dao.delete_charges(connection, charges)
     return redirect(url_for('home'))
 
 @app.route("/add_charge", methods=["GET", "POST"])

@@ -31,7 +31,7 @@
 <!--            <th>Action</th>-->
           </thead>
           <tbody>
-            <form id="deleteForm" action="{{url_for('test')}}" method="post">
+            <form id="deleteForm" action="{{url_for('delete_charges')}}" method="post">
                 {% for x in range(0, spending|length) %}
                     <tr class="">
                       <td><input id="row{{x}}" onclick="checklist({{x}})" type="checkbox" name="row_check" value="{{spending[x]['Charge ID']}}"></td>

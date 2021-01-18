@@ -56,10 +56,11 @@ def insert_new_charge(connection, charge):
 
     return cursor.lastrowid
 
-def delete_charge(connection, chargeID):
+def delete_charges(connection, charges):
     cursor = connection.cursor()
-    query = ("DELETE FROM spendingtrends.spending where chargeID=" + str(chargeID))
-    cursor.execute(query)
+    for charge in charges:
+        query = ("DELETE FROM spendingtrends.spending where chargeID=" + str(charge))
+        cursor.execute(query)
     connection.commit()
 
 def check_login(connection, username, password):
