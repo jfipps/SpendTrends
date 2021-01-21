@@ -82,7 +82,18 @@ def create_user(connection, username, password, email):
     connection.commit()
     return cursor.lastrowid
 
+def get_pie_data(connection):
+    cursor = connection.cursor()
+    cursor.execute("SELECT category, COUNT(*) AS count FROM spendingtrends.spending GROUP BY category ORDER BY count DESC")
+    response = []
+    for (category, count) in cursor:
+        response.append({
+            'Category': category,
+            'Count': count
+        })
+    return response
+
+
 if __name__ == "__main__":
     connection = get_sql_connection()
-    delete_charge(connection, 3)
 

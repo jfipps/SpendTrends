@@ -7,6 +7,21 @@ app = Flask(__name__)
 app.secret_key = 'thisisakey'
 connection = get_sql_connection()
 
+labels = [
+    'JAN', 'FEB', 'MAR', 'APR',
+    'MAY', 'JUN', 'JUL', 'AUG',
+    'SEP', 'OCT', 'NOV', 'DEC'
+]
+
+values = [
+    967.67, 1190.89, 1079.75, 1349.19,
+    2328.91, 2504.28, 2873.83, 4764.87,
+    4349.29, 6458.30, 9907, 16297
+]
+
+colors = [
+    "#F7464A", "#46BFBD", "#FDB45C"]
+
 @app.route("/", methods=["GET", "POST"])
 @app.route("/home", methods=["GET", "POST"])
 def home():
@@ -105,10 +120,12 @@ def logout():
     session.pop('greeting', None)
     return redirect(url_for("login"))
 
-@app.route("/test", methods=["POST"])
+@app.route("/test", methods=["GET"])
 def test():
-    print(request.form.getlist("row_check"))
-    return "Done"
+    pie_count = spending_dao.get_pie_data(connection)
+    pie_labels = labels
+    pie_values = values
+    return render_template("test.html", title="Bitcoin Monthly Price in USD", max=17000, set=zip(pie_count, colors))
 
 if __name__ == "__main__":
     print("Startng Flask server on port 5001")
