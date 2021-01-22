@@ -1,0 +1,21 @@
+button {
+    float: none !important;
+    display: inline;
+}
+
+th, td, thead, tbody {
+    text-align: center;
+    border: 1px solid black;
+}
+
+body {
+    background-color: #435165;
+  	margin: 0;
+  	padding: 0;
+  	font-family: 'Roboto', sans-serif;
+
+}
+
+.btn {
+    background-color: #c7c3c3;
+}

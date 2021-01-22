@@ -1,16 +1,5 @@
-{% extends "base.html" %}
-
-{% block head %}
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='chart.css')}}">
-{% endblock %}
-
-{% block title %}Charts{% endblock %}
-{% block content %}
-    <div class="container">
-        <h1>{{title}}</h1>
-        <canvas id="chart" width="600" height="400"></canvas>
-        <script>
-            var pieData = [
+function piegraph() {
+    var pieData = [
                 {% for pie_slice, colors in set %}
                     {
                         value: {{pie_slice['Count']}},
@@ -26,6 +15,4 @@
             max = {{ max }}
             //draw pie chart
             new Chart(document.getElementById("chart").getContext("2d")).Pie(pieData);
-        </script>
-    </div>
-{% endblock %}
+}
