@@ -1,18 +1,37 @@
-function piegraph() {
-    var pieData = [
-                {% for pie_slice, colors in set %}
-                    {
-                        value: {{pie_slice['Count']}},
-                        label: "{{pie_slice['Category']}}",
-                        color: "{{colors}}"
-                    },
-                {% endfor %}
-            ];
 
-            //get bar chart canvas
-            var mychart = document.getElementById("chart").getContext("2d");
-            steps = 10;
-            max = {{ max }}
-            //draw pie chart
-            new Chart(document.getElementById("chart").getContext("2d")).Pie(pieData);
+function logging() {
+    console.log("Testing");
+}
+
+function draw(pie_count) {
+    var parsed = JSON.parse(pie_count);
+    google.charts.load('current', {'packages':['corechart']});
+    pieChart(parsed);
+}
+
+function pieChart(pie_count) {
+    var pieData = [['Category', 'Number of Purchases']];
+     for (i = 0; i < pie_count.length; i++) {
+        pieData.push([pie_count[i]['Category'], pie_count[i]['Count']]);
+     }
+     google.charts.setOnLoadCallback(drawChart);
+     function drawChart() {
+        var data = google.visualization.arrayToDataTable(pieData);
+        var options = {
+           backgroundColor: 'transparent',
+           title: 'Charges'
+        };
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        function selectHandler() {
+            var selectedItem = chart.getSelection()[0];
+            if (selectedItem) {
+                var topping = data.getValue(selectedItem.row, 0);
+                console.log(topping);
+            }
+        }
+
+        google.visualization.events.addListener(chart, 'select', selectHandler);
+        chart.draw(data, options);
+     }
 }

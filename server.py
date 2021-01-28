@@ -56,8 +56,9 @@ def home():
 
 @app.route("/delete_charges", methods=["POST"])
 def delete_charges():
-    charges = request.form.getlist("row_check")
-    spending_dao.delete_charges(connection, charges)
+    if len(request.form.getlist("row_check")) > 0:
+        charges = request.form.getlist("row_check")
+        spending_dao.delete_charges(connection, charges)
     return redirect(url_for('home'))
 
 @app.route("/add_charge", methods=["GET", "POST"])
@@ -123,9 +124,8 @@ def logout():
 @app.route("/test", methods=["GET"])
 def test():
     pie_count = spending_dao.get_pie_data(connection)
-    pie_labels = labels
-    pie_values = values
-    return render_template("test.html", title="Bitcoin Monthly Price in USD", max=17000, set=zip(pie_count, colors))
+    print(type(pie_count))
+    return render_template("test.html", title="Bitcoin Monthly Price in USD", max=17000, pie_count=pie_count)
 
 if __name__ == "__main__":
     print("Startng Flask server on port 5001")

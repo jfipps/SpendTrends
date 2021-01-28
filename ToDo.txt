@@ -1,0 +1,2 @@
+-Fix issue with delete button. Stays active while nothing is checked
+-Figure out onload for charts
