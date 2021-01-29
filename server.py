@@ -20,7 +20,8 @@ values = [
 ]
 
 colors = [
-    "#F7464A", "#46BFBD", "#FDB45C"]
+    "#F7464A", "#46BFBD", "#FDB45C"
+]
 
 @app.route("/", methods=["GET", "POST"])
 @app.route("/home", methods=["GET", "POST"])
@@ -42,12 +43,14 @@ def home():
         sortedSpend = sorted(spending, key=lambda k: k['Date'], reverse=True)
         return render_template("home.html", spending=sortedSpend, greeting="")
     if request.method == "POST":
+        print("test")
         filter_data = {
-            'category': request.form['category'],
-            'vendor': request.form['vendor'],
-            'card': request.form['card'],
+            'category': request.form['category_filter'],
+            'vendor': request.form['vendor_filter'],
+            'card': request.form['card_filter'],
             'date': request.form['dateSelect']
         }
+        print(filter_data)
         filtered_spending = spending_dao.get_filtered_charges(connection, filter_data, 2)
         for item in filtered_spending:
             print(item)
@@ -121,12 +124,12 @@ def logout():
     session.pop('greeting', None)
     return redirect(url_for("login"))
 
-@app.route("/test", methods=["GET"])
-def test():
+@app.route("/charts", methods=["GET"])
+def charts():
     pie_count = spending_dao.get_pie_data(connection)
     print(type(pie_count))
-    return render_template("test.html", title="Bitcoin Monthly Price in USD", max=17000, pie_count=pie_count)
+    return render_template("charts.html", title="Bitcoin Monthly Price in USD", max=17000, pie_count=pie_count)
 
 if __name__ == "__main__":
-    print("Startng Flask server on port 5001")
-    app.run(port=5002)
+    print("Starting Flask server on port 5001")
+    app.run(port=5003)

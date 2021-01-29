@@ -3,13 +3,10 @@ var selectedRows = []
 function arrowLogic(n) {
     table = document.getElementById("chargeTable");
     rows = table.rows;
-    for (i = 0; i < rows.length; i++) {
+    for (i = 0; i < (rows.length - 1); i++) {
         x = rows[0].getElementsByTagName("i")[i];
-        console.log("I: " + i + " N: " + n);
-        console.log(x.id);
         if (i != n) {
             x.style.display = "none";
-
         }
         else {
             if (x.classList.contains("up")) {
@@ -28,6 +25,7 @@ function arrowLogic(n) {
 function sortTable(n) {
     arrowLogic(n);
     identity = document.getElementById(n);
+    console.log(identity);
     var table, rows, switching, i, x, y, shouldSwitch, dir, switchcount = 0;
     table = document.getElementById("chargeTable")
     switching = true;

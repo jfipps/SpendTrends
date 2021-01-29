@@ -59,14 +59,14 @@
                 </div>
                 <div class="modal-body">
                   <form method="post" action="{{ url_for('home')}}">
-                      <label for="category">Category</label><br>
-                      <input type="text" id="category" name="category" value=""><br>
-                      <label for="vendor">Vendor</label><br>
-                      <input type="text" id="vendor" name="vendor" value=""><br>
+                      <label for="category_filter">Category</label><br>
+                      <input type="text" id="category_filter" name="category_filter" value=""><br>
+                      <label for="vendor_filter">Vendor</label><br>
+                      <input type="text" id="vendor_filter" name="vendor_filter" value=""><br>
 <!--                      <label for="charge">Charge</label><br>-->
 <!--                      <input type="text" id="charge" name="charge" value=""><br>-->
-                      <label for="card">Card</label><br>
-                      <input type="text" id="card" name="card" value=""><br>
+                      <label for="card_filter">Card</label><br>
+                      <input type="text" id="card_filter" name="card_filter" value=""><br>
                       <label for="dateSelect">Date</label><br>
                       <select name="dateSelect" id="dateSelect">
                           <option value=""></option>
@@ -95,7 +95,7 @@
                   </button>
                 </div>
                 <div class="modal-body">
-                  <form method="post" action="{{ url_for('test')}}">
+                  <form method="post" action="{{ url_for('delete_charges')}}">
                     <h3>Delete selected charges?</h3>  
                     <div class="modal-footer">
                       <button type="button" class="btn" onclick="deleteFormSubmit()">Delete</button>
