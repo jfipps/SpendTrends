@@ -20,15 +20,14 @@
 <!--            <a href="logout"><button type="button" class="btn">Logout</button></a>-->
 <!--          </div>-->
 <!--        </div>-->
-        <table class="table table-bordered myTable" id="chargeTable">
+        <table class="table table-sortable myTable" id="chargeTable">
           <thead>
             <th><input type="checkbox" id="check_all" onclick="toggle(this)"></th>
-            <th onclick="sortTable(0)">Category   <i id="0" class="arrow up" style="display: none"></i></th>
-            <th onclick="sortTable(1)">Vendor   <i id="1" class="arrow up" style="display: none"></i></th>
-            <th onclick="sortTable(2)">Charge   <i id="2" class="arrow up" style="display: none"></i></th>
-            <th onclick="sortTable(3)">Card   <i id="3" class="arrow up" style="display: none"></i></th>
-            <th onclick="sortTable(4)">Date   <i id="4" class="arrow up"></i></th>
-<!--            <th>Action</th>-->
+            <th>Category</th>
+            <th>Vendor</th>
+            <th>Charge</th>
+            <th>Card</th>
+            <th>Date</th>
           </thead>
           <tbody>
             <form id="deleteForm" action="{{url_for('delete_charges')}}" method="post">
@@ -37,7 +36,7 @@
                       <td><input id="row{{x}}" onclick="checklist({{x}})" type="checkbox" name="row_check" value="{{spending[x]['Charge ID']}}"></td>
                       <td align="center">{{spending[x]['Category']}}</td>
                       <td align="center">{{spending[x]['Vendor']}}</td>
-                      <td align="center">${{spending[x]['Charge']}}</td>
+                      <td align="center">${{spending[x]['chargeString']}}</td>
                       <td align="center">{{spending[x]['Card']}}</td>
                       <td align="center">{{spending[x]['Date']}}</td>
                     </tr>

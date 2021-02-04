@@ -7,22 +7,6 @@ app = Flask(__name__)
 app.secret_key = 'thisisakey'
 connection = get_sql_connection()
 
-labels = [
-    'JAN', 'FEB', 'MAR', 'APR',
-    'MAY', 'JUN', 'JUL', 'AUG',
-    'SEP', 'OCT', 'NOV', 'DEC'
-]
-
-values = [
-    967.67, 1190.89, 1079.75, 1349.19,
-    2328.91, 2504.28, 2873.83, 4764.87,
-    4349.29, 6458.30, 9907, 16297
-]
-
-colors = [
-    "#F7464A", "#46BFBD", "#FDB45C"
-]
-
 @app.route("/", methods=["GET", "POST"])
 @app.route("/home", methods=["GET", "POST"])
 def home():
@@ -41,6 +25,9 @@ def home():
         session['id'] = 2
         spending = spending_dao.get_all_charges(connection, 2)
         sortedSpend = sorted(spending, key=lambda k: k['Date'], reverse=True)
+        for item in sortedSpend:
+            chargeString = "{:.2f}".format(item['Charge'])
+            item['chargeString'] = chargeString
         return render_template("home.html", spending=sortedSpend, greeting="")
     if request.method == "POST":
         print("test")
@@ -53,7 +40,8 @@ def home():
         print(filter_data)
         filtered_spending = spending_dao.get_filtered_charges(connection, filter_data, 2)
         for item in filtered_spending:
-            print(item)
+            chargeString = "{:.2f}".format(item['Charge'])
+            item['chargeString'] = chargeString
         return render_template("home.html", spending=filtered_spending, greeting="")
 
 
