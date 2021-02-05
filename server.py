@@ -7,6 +7,7 @@ app = Flask(__name__)
 app.secret_key = 'thisisakey'
 connection = get_sql_connection()
 
+#Home page for logged in users. Will redirect to login page if hit without login session
 @app.route("/", methods=["GET", "POST"])
 @app.route("/home", methods=["GET", "POST"])
 def home():
@@ -21,30 +22,39 @@ def home():
     #     return render_template("home.html", spending=spending, greeting=greeting)
     # if request.method == "GET" and not session['loggedin']:
     #     return redirect(url_for("login"))
+
+    #Gets all charges for the logged in user. Sorts by date by default
     if request.method == "GET":
         session['id'] = 2
         spending = spending_dao.get_all_charges(connection, 2)
         sortedSpend = sorted(spending, key=lambda k: k['Date'], reverse=True)
+
+        #Adds in dictionary entry for two decimal places for the charge float
         for item in sortedSpend:
             chargeString = "{:.2f}".format(item['Charge'])
             item['chargeString'] = chargeString
+
         return render_template("home.html", spending=sortedSpend, greeting="")
+
+    #Gets filter data from home page for user. Filters by said data and reloads homepage.
     if request.method == "POST":
-        print("test")
         filter_data = {
             'category': request.form['category_filter'],
             'vendor': request.form['vendor_filter'],
             'card': request.form['card_filter'],
             'date': request.form['dateSelect']
         }
-        print(filter_data)
         filtered_spending = spending_dao.get_filtered_charges(connection, filter_data, 2)
+
+        # Adds in dictionary entry for two decimal places for the charge float
         for item in filtered_spending:
             chargeString = "{:.2f}".format(item['Charge'])
             item['chargeString'] = chargeString
+
         return render_template("home.html", spending=filtered_spending, greeting="")
 
 
+#Gets checked boxes from user list and deletes said charges. Can be used for returns or paybacks.
 @app.route("/delete_charges", methods=["POST"])
 def delete_charges():
     if len(request.form.getlist("row_check")) > 0:
@@ -52,6 +62,8 @@ def delete_charges():
         spending_dao.delete_charges(connection, charges)
     return redirect(url_for('home'))
 
+
+#Function for adding a charge. Receives data from the add charge modal.
 @app.route("/add_charge", methods=["GET", "POST"])
 def add_charge():
     if request.method == "GET":
@@ -65,11 +77,10 @@ def add_charge():
             'date': request.form['date'],
             'userID': session['id']
         }
-        for item in input_data:
-            print(item)
         spending_dao.insert_new_charge(connection, input_data)
         return redirect(url_for('home'))
 
+#Login page for users. Landing page. Sets initial greeting if the first time session was created in browser cache.
 @app.route("/login", methods=["GET", "POST"])
 def login():
     msg = ''
@@ -89,6 +100,8 @@ def login():
 
     return render_template("login.html", msg=msg)
 
+
+#Registration page for accounts.
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     msg = ''
@@ -104,6 +117,8 @@ def register():
 
     return render_template("register.html", msg=msg)
 
+
+#Logout function
 @app.route("/logout", methods=["GET"])
 def logout():
     session.pop('loggedin', None)
@@ -112,6 +127,8 @@ def logout():
     session.pop('greeting', None)
     return redirect(url_for("login"))
 
+
+#Charting page. Used to visualize user data. 
 @app.route("/charts", methods=["GET"])
 def charts():
     pie_count = spending_dao.get_pie_data(connection)

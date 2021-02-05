@@ -26,23 +26,25 @@ function sortTable(table, columnIndex, asc = true) {
     const tBody = table.tBodies[0];
     const rows = Array.from(tBody.querySelectorAll('tr'));
     //Sort Rows
-    const sortedRows = rows.sort((a, b) => {
-        const aColText = a.querySelector(`td:nth-child(${ columnIndex + 1})`).textContent.trim();
-        const bColText = b.querySelector(`td:nth-child(${ columnIndex + 1})`).textContent.trim();
-        return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
-    });
-    console.log(sortedRows);
-//    else {
-//        const sortedRows = rows.sort((a, b) => {
-//            var aColText = a.querySelector(`td:nth-child(${ columnIndex + 1})`).textContent.trim();
-//            var bColText = b.querySelector(`td:nth-child(${ columnIndex + 1})`).textContent.trim();
-//            aColText = Number(aColText.replace(/(^\$|,)/g,''));
-//            bColText = Number(bColText.replace(/(^\$|,)/g,''));
-//            console.log(aColText);
-//            console.log(bColText);
-//            return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
-//        });
-//    }
+    //Sorts any column not involving money
+    if (columnIndex != 3) {
+        var sortedRows = rows.sort((a, b) => {
+            var aColText = a.querySelector(`td:nth-child(${ columnIndex + 1})`).textContent.trim();
+            var bColText = b.querySelector(`td:nth-child(${ columnIndex + 1})`).textContent.trim();
+            return aColText > bColText ? (1 * dirModifier) : (-1 * dirModifier);
+        });
+    }
+    //Sorts column based on money
+    //Turns to float to compare
+    else {
+        var sortedRows = rows.sort((a, b) => {
+            var aColText = a.querySelector(`td:nth-child(${ columnIndex + 1})`).textContent.trim();
+            var bColText = b.querySelector(`td:nth-child(${ columnIndex + 1})`).textContent.trim();
+            aColFloat = Number(aColText.replace(/(^\$|,)/g,''));
+            bColFloat = Number(bColText.replace(/(^\$|,)/g,''));
+            return aColFloat > bColFloat ? (1 * dirModifier) : (-1 * dirModifier);
+        });
+    }
     //Remove all TRs from table
     while (tBody.firstChild) {
         tBody.removeChild(tBody.firstChild);
@@ -57,6 +59,7 @@ function sortTable(table, columnIndex, asc = true) {
     table.querySelector(`th:nth-child(${ columnIndex + 1})`).classList.toggle("th-sort-desc", !asc);
 }
 
+//Initiates functions for table head onclick
 window.onload = function() {
     document.querySelectorAll(".table-sortable th").forEach(headerCell => {
         headerCell.addEventListener("click", () => {
@@ -69,17 +72,16 @@ window.onload = function() {
     });
 }
 
+//Checks all checkboxes
 function checklist(n) {
     row = document.getElementById("row" + n);
     if (row.classList.contains("selected")) {
-//        row.classList.remove("selected");
         var index = selectedRows.indexOf("row" + n);
         if (index > -1) {
             selectedRows.splice(index, 1);
         }
     }
     else {
-//        row.classList.add("selected");
         selectedRows.push(row.id);
     }
     if (selectedRows.length > 0) {
@@ -90,6 +92,7 @@ function checklist(n) {
     }
 }
 
+//Toggles individual checkboxes
 function toggle(source) {
     checkboxes = document.getElementsByName("row_check");
     for(i=0; i < checkboxes.length; i++) {
@@ -97,6 +100,7 @@ function toggle(source) {
     }
 }
 
+//Submit function for delete modal
 function deleteFormSubmit() {
     var form = document.getElementById("deleteForm");
     form.submit();
