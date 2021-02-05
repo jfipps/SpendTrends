@@ -128,12 +128,11 @@ def logout():
     return redirect(url_for("login"))
 
 
-#Charting page. Used to visualize user data. 
+#Charting page. Used to visualize user data.
 @app.route("/charts", methods=["GET"])
 def charts():
     pie_count = spending_dao.get_pie_data(connection)
-    print(type(pie_count))
-    return render_template("charts.html", title="Bitcoin Monthly Price in USD", max=17000, pie_count=pie_count)
+    return render_template("charts.html", title="Charge Charts", max=17000, pie_count=pie_count)
 
 if __name__ == "__main__":
     print("Starting Flask server on port 5001")

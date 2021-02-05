@@ -28,23 +28,24 @@ table {
     background-color: #aeb7d4;
 }
 
-.arrow {
-  border: solid black;
-  border-width: 0 3px 3px 0;
-  display: inline-block;
-  padding: 3px;
+.table-sortable th {
+    cursor: pointer;
 }
 
-.up {
-  transform: rotate(-135deg);
-  -webkit-transform: rotate(-135deg);
+.table-sortable .th-sort-asc::after {
+    content: "\25b4";
 }
 
-.down {
-  transform: rotate(45deg);
-  -webkit-transform: rotate(45deg);
+.table-sortable .th-sort-desc::after {
+    content: "\25be";
 }
 
-.selected {
-    background-color: #949392;
+.table-sortable .th-sort-asc::after,
+.table-sortable .th-sort-desc::after {
+    margin-left: 5px;
+}
+
+.table-sortable .th-sort-asc,
+.table-sortable .th-sort-desc {
+    background: rgba(0, 0, 0, 0.1);
 }

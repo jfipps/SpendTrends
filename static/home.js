@@ -66,7 +66,6 @@ window.onload = function() {
             const tableElement = headerCell.parentElement.parentElement.parentElement;
             const headerIndex = Array.prototype.indexOf.call(headerCell.parentElement.children, headerCell);
             const currentIsAscending = headerCell.classList.contains("th-sort-asc");
-
             sortTable(tableElement, headerIndex, !currentIsAscending);
        });
     });

@@ -1,8 +1,3 @@
-
-function logging() {
-    console.log("Testing");
-}
-
 function draw(pie_count) {
     var parsed = JSON.parse(pie_count);
     google.charts.load('current', {'packages':['corechart']});
@@ -19,7 +14,12 @@ function pieChart(pie_count) {
         var data = google.visualization.arrayToDataTable(pieData);
         var options = {
            backgroundColor: 'transparent',
-           title: 'Charges'
+           title: 'Charges',
+           animation:{
+                duration: 1000,
+                easing: 'out',
+                startup: true,
+           }
         };
         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
