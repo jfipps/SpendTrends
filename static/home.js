@@ -1,3 +1,5 @@
+selectedRows = []
+
 function arrowLogic(n) {
     table = document.getElementById("chargeTable");
     rows = table.rows;
@@ -73,6 +75,7 @@ window.onload = function() {
 
 //Checks all checkboxes
 function checklist(n) {
+    console.log(n);
     row = document.getElementById("row" + n);
     if (row.classList.contains("selected")) {
         var index = selectedRows.indexOf("row" + n);

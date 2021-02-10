@@ -1,9 +1,11 @@
 from flask import Flask, request, jsonify, render_template, redirect, url_for, session
+from flask_jsglue import JSGlue
 import json
 import spending_dao
 from sql_connection import get_sql_connection
 
 app = Flask(__name__)
+jsglue = JSGlue(app)
 app.secret_key = 'thisisakey'
 connection = get_sql_connection()
 
@@ -132,6 +134,7 @@ def logout():
 @app.route("/charts", methods=["GET"])
 def charts():
     pie_count = spending_dao.get_pie_data(connection)
+    print(pie_count)
     return render_template("charts.html", title="Charge Charts", max=17000, pie_count=pie_count)
 
 if __name__ == "__main__":

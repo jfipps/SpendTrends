@@ -1,2 +1,2 @@
--Fix issue with delete button. Stays active while nothing is checked
--Figure out onload for charts
+-Fix pie chart issue. Need to chart by userID
+-Comment and clean up 

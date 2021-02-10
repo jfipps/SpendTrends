@@ -27,11 +27,21 @@ function pieChart(pie_count) {
             var selectedItem = chart.getSelection()[0];
             if (selectedItem) {
                 var topping = data.getValue(selectedItem.row, 0);
-                console.log(topping);
+                formSubmit(topping);
             }
         }
 
         google.visualization.events.addListener(chart, 'select', selectHandler);
         chart.draw(data, options);
      }
+}
+
+function formSubmit(topping) {
+    var input = document.getElementById("category_filter");
+    input.value = topping;
+
+    console.log(input);
+
+    var form = document.getElementById("pieForm");
+    form.submit();
 }
