@@ -1,2 +1,2 @@
--Fix pie chart issue. Need to chart by userID
--Comment and clean up 
+-More cleanup
+-Get pie charts for Vendors and Cards working

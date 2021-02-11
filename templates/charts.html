@@ -11,15 +11,15 @@
 {% block content %}
     <div class="container pt-4">
         <h1>{{title}}</h1>
-        <form id="pieForm" method="post" action="{{ url_for('home')}}">
-            <div id="piechart" width="800" height="650"></div>
+        <form id="pie_form" method="post" action="{{ url_for('home')}}">
+            <div id="pie_category"></div>
             <input type="hidden" id="category_filter" name="category_filter" value="">
             <input type="hidden" id="vendor_filter" name="vendor_filter" value="">
             <input type="hidden" id="card_filter" name="card_filter" value="">
-            <input type="hidden" id="dateSelect" name="dateSelect" value="">
+            <input type="hidden" id="date_select" name="date_select" value="">
         </form>
         <script type="text/javascript">
-            draw('{{pie_count | tojson}}');
+            draw('{{pie_category | tojson}}');
         </script>
     </div>
 {% endblock %}

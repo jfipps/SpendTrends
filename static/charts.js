@@ -1,27 +1,26 @@
-function draw(pie_count) {
-    var parsed = JSON.parse(pie_count);
+// Javascript file using Google Charting library to chart user data
+
+// Parses in user info from JSON content and creates chart for it
+function draw(pie_category) {
+    var parsed = JSON.parse(pie_category);
     google.charts.load('current', {'packages':['corechart']});
-    pieChart(parsed);
+    drawCategory(parsed);
 }
 
-function pieChart(pie_count) {
-    var pieData = [['Category', 'Number of Purchases']];
-     for (i = 0; i < pie_count.length; i++) {
-        pieData.push([pie_count[i]['Category'], pie_count[i]['Count']]);
+// Library call for drawing the category pie chart
+function drawCategory(pie_category) {
+    var pie_data = [['Category', 'Number of Purchases']];
+     for (i = 0; i < pie_category.length; i++) {
+        pie_data.push([pie_category[i]['Category'], pie_category[i]['Count']]);
      }
      google.charts.setOnLoadCallback(drawChart);
      function drawChart() {
-        var data = google.visualization.arrayToDataTable(pieData);
+        var data = google.visualization.arrayToDataTable(pie_data);
         var options = {
            backgroundColor: 'transparent',
-           title: 'Charges',
-           animation:{
-                duration: 1000,
-                easing: 'out',
-                startup: true,
-           }
+           title: 'Categories',
         };
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        var chart = new google.visualization.PieChart(document.getElementById('pie_category'));
 
         function selectHandler() {
             var selectedItem = chart.getSelection()[0];
@@ -42,6 +41,6 @@ function formSubmit(topping) {
 
     console.log(input);
 
-    var form = document.getElementById("pieForm");
+    var form = document.getElementById("pie_form");
     form.submit();
 }

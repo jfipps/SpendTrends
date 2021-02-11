@@ -88,9 +88,9 @@ def create_user(connection, username, password, email):
     connection.commit()
     return cursor.lastrowid
 
-def get_pie_data(connection):
+def get_pie_data(connection, userID):
     cursor = connection.cursor()
-    cursor.execute("SELECT category, COUNT(*) AS count FROM spendingtrends.spending GROUP BY category ORDER BY count DESC")
+    cursor.execute('SELECT category, COUNT(*) AS count FROM spendingtrends.spending WHERE userID = ' + str(userID) + ' GROUP BY category ORDER BY count DESC')
     response = []
     for (category, count) in cursor:
         response.append({
