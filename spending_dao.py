@@ -1,6 +1,6 @@
 from sql_connection import get_sql_connection
 
-#MYSQL call to get all charges with userID as key
+# MYSQL call to get all charges with userID as key
 def get_all_charges(connection, user):
     cursor = connection.cursor()
     query = "SELECT * FROM spendingtrends.spending WHERE userID = " + str(user)
@@ -20,7 +20,7 @@ def get_all_charges(connection, user):
         )
     return response
 
-#MYSQL call to get charges with filters in place
+# MYSQL call to get charges with filters in place
 def get_filtered_charges(connection, filterOptions, user):
     query_where_string = []
     for item in filterOptions:
@@ -49,7 +49,7 @@ def get_filtered_charges(connection, filterOptions, user):
         )
     return response
 
-#MYSQL call to insert a charge
+# MYSQL call to insert a charge
 def insert_new_charge(connection, charge):
     cursor = connection.cursor()
     query = ("insert into spendingtrends.spending (category, vendor, charge, card, date, userID) values (%s, %s, %s, %s, %s, %s);")
@@ -59,7 +59,7 @@ def insert_new_charge(connection, charge):
 
     return cursor.lastrowid
 
-#MYSQL call to delete selected charge(s)
+# MYSQL call to delete selected charge(s)
 def delete_charges(connection, charges):
     cursor = connection.cursor()
     for charge in charges:
@@ -67,7 +67,7 @@ def delete_charges(connection, charges):
         cursor.execute(query)
     connection.commit()
 
-#MYSQL call to check the logins table for the username and password
+# MYSQL call to check the logins table for the username and password
 def check_login(connection, username, password):
     cursor = connection.cursor()
     cursor.execute('SELECT * FROM spendingtrends.logins WHERE username = %s AND password = %s', (username, password))
@@ -81,14 +81,15 @@ def check_login(connection, username, password):
         })
     return response
 
-#MYSQL call to create new users
+# MYSQL call to create new users
 def create_user(connection, username, password, email):
     cursor = connection.cursor()
     cursor.execute("INSERT INTO spendingtrends.logins (username, password, email) VALUES (%s, %s, %s)", (username, password, email))
     connection.commit()
     return cursor.lastrowid
 
-def get_pie_data(connection, userID):
+# MYSQL call to get the categories for the category chart
+def get_pie_category(connection, userID):
     cursor = connection.cursor()
     cursor.execute('SELECT category, COUNT(*) AS count FROM spendingtrends.spending WHERE userID = ' + str(userID) + ' GROUP BY category ORDER BY count DESC')
     response = []
@@ -99,6 +100,30 @@ def get_pie_data(connection, userID):
         })
     return response
 
+# MYSQL call to get vendors for vendor chart
+def get_pie_vendor(connection, userID):
+    cursor = connection.cursor()
+    cursor.execute('SELECT vendor, COUNT(*) AS count FROM spendingtrends.spending WHERE userID = ' + str(userID) + ' GROUP BY category ORDER BY count DESC')
+    response = []
+    for (vendor, count) in cursor:
+        response.append({
+            'Vendor': vendor,
+            'Count': count
+        })
+    return response
+
+# MYSQL call to get cards for card chart
+def get_pie_card(connection, userID):
+    cursor = connection.cursor()
+    cursor.execute('SELECT card, COUNT(*) AS count FROM spendingtrends.spending WHERE userID = ' + str(userID) + ' GROUP BY category ORDER BY count DESC')
+    response = []
+    for (card, count) in cursor:
+        response.append({
+            'Card': card,
+            'Count': count
+        })
+    print(response)
+    return response
 
 if __name__ == "__main__":
     connection = get_sql_connection()

@@ -1,2 +1,2 @@
 -More cleanup
--Get pie charts for Vendors and Cards working
+-Fix issue with card chart not counting correctly
