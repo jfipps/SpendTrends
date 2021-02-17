@@ -1,2 +1,3 @@
 -More cleanup
--Fix issue with card chart not counting correctly
+-Clean up UI
+-Set up user profile page

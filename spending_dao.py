@@ -50,10 +50,16 @@ def get_filtered_charges(connection, filterOptions, user):
     return response
 
 # MYSQL call to insert a charge
+# Performs lstrip and rstrip on user string inputs for count purposes for charting
 def insert_new_charge(connection, charge):
     cursor = connection.cursor()
     query = ("insert into spendingtrends.spending (category, vendor, charge, card, date, userID) values (%s, %s, %s, %s, %s, %s);")
-    data = (charge['category'], charge['vendor'], charge['charge'], charge['card'], charge['date'], charge['userID'])
+    data = (charge['category'].lstrip().rstrip(),
+            charge['vendor'].lstrip().rstrip(),
+            charge['charge'].lstrip().rstrip(),
+            charge['card'].lstrip().rstrip(),
+            charge['date'],
+            charge['userID'])
     cursor.execute(query, data)
     connection.commit()
 
@@ -91,7 +97,7 @@ def create_user(connection, username, password, email):
 # MYSQL call to get the categories for the category chart
 def get_pie_category(connection, userID):
     cursor = connection.cursor()
-    cursor.execute('SELECT category, COUNT(*) AS count FROM spendingtrends.spending WHERE userID = ' + str(userID) + ' GROUP BY category ORDER BY count DESC')
+    cursor.execute('SELECT category, COUNT(category) AS count FROM spendingtrends.spending WHERE userID=' + str(userID) + ' GROUP BY category ORDER BY count DESC')
     response = []
     for (category, count) in cursor:
         response.append({
@@ -103,7 +109,7 @@ def get_pie_category(connection, userID):
 # MYSQL call to get vendors for vendor chart
 def get_pie_vendor(connection, userID):
     cursor = connection.cursor()
-    cursor.execute('SELECT vendor, COUNT(*) AS count FROM spendingtrends.spending WHERE userID = ' + str(userID) + ' GROUP BY category ORDER BY count DESC')
+    cursor.execute('SELECT vendor, COUNT(vendor) AS count FROM spendingtrends.spending WHERE userID=' + str(userID) + ' GROUP BY vendor ORDER BY count DESC')
     response = []
     for (vendor, count) in cursor:
         response.append({
@@ -115,7 +121,7 @@ def get_pie_vendor(connection, userID):
 # MYSQL call to get cards for card chart
 def get_pie_card(connection, userID):
     cursor = connection.cursor()
-    cursor.execute('SELECT card, COUNT(*) AS count FROM spendingtrends.spending WHERE userID = ' + str(userID) + ' GROUP BY category ORDER BY count DESC')
+    cursor.execute('SELECT card, COUNT(card) AS count FROM spendingtrends.spending WHERE userID=' + str(userID) + ' GROUP BY card ORDER BY count DESC')
     response = []
     for (card, count) in cursor:
         response.append({
