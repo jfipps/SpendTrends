@@ -5,23 +5,33 @@ button {
 
 th, td, thead, tbody {
     text-align: center;
-    border: 1px solid black;
+    /*border: 1px solid black;*/
 }
 
 body {
-    background-color: #6d7991;
+    background-color: #ffffff;
   	margin: 0;
   	padding: 0;
   	font-family: 'Roboto', sans-serif;
 
 }
 
-table {
-    background-color: #c7c3c3;
+.table tr {
+    /* background-color: #f7fffd; */
+    border: none;
+}
+
+.table tbody tr:nth-of-type(even) {
+    background-color: #e0e0e0;
+}
+
+.table th {
+    color: white;
+    background-color: #009879;
 }
 
 .btn {
-    background-color: #c7c3c3;
+    background-color: #f7fffd;
 }
 
 .delete-button {
@@ -47,5 +57,22 @@ table {
 
 .table-sortable .th-sort-asc,
 .table-sortable .th-sort-desc {
-    background: rgba(0, 0, 0, 0.1);
+    filter: brightness(110%);
+}
+
+/* the first 'th' within the first 'tr' of the 'thead': */
+thead tr:first-child th:first-child {
+    border-radius: 0.6em 0 0 0;
+}
+/* the last 'th' within the first 'tr' of the 'thead': */
+thead tr:first-child th:last-child {
+    border-radius: 0 0.6em 0 0;
+}
+/* the first 'td' within the last 'tr' of the 'tbody': */
+tbody tr:last-child td:first-child {
+    border-radius: 0 0 0 0.6em;
+}
+/* the last 'td' within the last 'tr' of the 'tbody': */
+tbody tr:last-child td:last-child {
+    border-radius: 0 0 0.6em 0;
 }

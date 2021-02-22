@@ -1,3 +1,4 @@
 -More cleanup
 -Clean up UI
+	-Fix table border issues 
 -Set up user profile page
