@@ -34,7 +34,9 @@ def home():
         # Adds in dictionary entry for two decimal places for the charge float
         for item in sortedSpend:
             charge_string = "{:.2f}".format(item['Charge'])
-            item['chargeString'] = charge_string
+            item['charge_string'] = charge_string
+
+        print(sortedSpend)
 
         return render_template("home.html", spending=sortedSpend, greeting="")
 
@@ -48,10 +50,14 @@ def home():
         }
         filtered_spending = spending_dao.get_filtered_charges(connection, filter_data, 2)
 
+        print(filtered_spending)
+
         # Adds in dictionary entry for two decimal places for the charge float
         for item in filtered_spending:
             charge_string = "{:.2f}".format(item['Charge'])
             item['charge_string'] = charge_string
+
+        print(filtered_spending)
 
         return render_template("home.html", spending=filtered_spending, greeting="")
 

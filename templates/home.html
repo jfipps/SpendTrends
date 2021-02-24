@@ -20,7 +20,7 @@
 <!--            <a href="logout"><button type="button" class="btn">Logout</button></a>-->
 <!--          </div>-->
 <!--        </div>-->
-        <table border="0" class="table table-sortable myTable" id="chargeTable">
+        <table class="table table-sortable myTable" id="chargeTable">
           <thead>
             <th><input type="checkbox" id="check_all" onclick="toggle(this)"></th>
             <th>Category</th>
@@ -36,7 +36,7 @@
                       <td><input id="row{{x}}" onclick="checklist({{x}})" type="checkbox" name="row_check" value="{{spending[x]['Charge ID']}}"></td>
                       <td align="center">{{spending[x]['Category']}}</td>
                       <td align="center">{{spending[x]['Vendor']}}</td>
-                      <td align="center">${{spending[x]['chargeString']}}</td>
+                      <td align="center">${{spending[x]['charge_string']}}</td>
                       <td align="center">{{spending[x]['Card']}}</td>
                       <td align="center">{{spending[x]['Date']}}</td>
                     </tr>

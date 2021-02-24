@@ -5,7 +5,10 @@ button {
 
 th, td, thead, tbody {
     text-align: center;
-    /*border: 1px solid black;*/
+}
+
+tbody, td, tfoot, th, thead, tr {
+    border-style: none;
 }
 
 body {
@@ -18,7 +21,6 @@ body {
 
 .table tr {
     /* background-color: #f7fffd; */
-    border: none;
 }
 
 .table tbody tr:nth-of-type(even) {
@@ -31,7 +33,7 @@ body {
 }
 
 .btn {
-    background-color: #f7fffd;
+    background-color: #e0e0e0;
 }
 
 .delete-button {

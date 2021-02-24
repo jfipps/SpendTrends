@@ -128,7 +128,6 @@ def get_pie_card(connection, userID):
             'Card': card,
             'Count': count
         })
-    print(response)
     return response
 
 if __name__ == "__main__":
