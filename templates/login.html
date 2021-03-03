@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "login_base.html" %}
 
 {% block head %}
   <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='login.css')}}">
@@ -30,11 +30,11 @@
                 </div>
                 <div class="form-group d-flex justify-content-center align-items-center">
                   <div class="submitButton">
-                    <input type="submit" value="Login" class="btn btn-primary form-control" id="submitButton">
+                    <input type="submit" value="Login" class="btn btn-secondary form-control" id="submitButton">
                   </div>
                   <div class="divider"></div>
                   <div class="registerButton">
-                    <a href="{{ url_for('register')}}" class="btn btn-primary form-control" id="registerButton">Register</a>
+                    <a href="{{ url_for('register')}}" class="btn btn-secondary form-control" id="registerButton">Register</a>
                   </div>
                 </div>
                 <div class="msg text-center">{{ msg }}</div>

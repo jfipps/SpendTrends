@@ -10,8 +10,3 @@ a {
 .black-font {
     color: black !important;
 }
-
-.dropdown-menu-right {
-    right: 0;
-    left: auto;
-}
