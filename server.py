@@ -133,11 +133,19 @@ def logout():
 # Charting page. Used to visualize user data.
 @app.route("/charts", methods=["GET"])
 def charts():
-    if session['id']:
+    if session.get('id') == True:
         pie_category = spending_dao.get_pie_category(connection, session['id'])
         pie_vendor = spending_dao.get_pie_vendor(connection, session['id'])
         pie_card = spending_dao.get_pie_card(connection, session['id'])
         return render_template("charts.html", title="Charge Charts", max=17000, pie_category=pie_category, pie_vendor=pie_vendor, pie_card=pie_card)
+    else:
+        return redirect(url_for("login"))
+
+# User profile page. User can edit profile info as needed.
+@app.route("/profile", methods=["GET", "POST"])
+def profile():
+    if session.get('id') == True:
+        return render_template("profile.html")
     else:
         return redirect(url_for("login"))
 
