@@ -88,9 +88,9 @@ def check_login(connection, username, password):
     return response
 
 # MYSQL call to create new users
-def create_user(connection, username, password, email):
+def create_user(connection, firstName, lastName, username, password, email):
     cursor = connection.cursor()
-    cursor.execute("INSERT INTO spendingtrends.logins (username, password, email) VALUES (%s, %s, %s)", (username, password, email))
+    cursor.execute("INSERT INTO spendingtrends.logins (username, password, email, firstName, lastName) VALUES (%s, %s, %s, %s, %s)", (username, password, email, firstName, lastName))
     connection.commit()
     return cursor.lastrowid
 
@@ -127,6 +127,21 @@ def get_pie_card(connection, userID):
         response.append({
             'Card': card,
             'Count': count
+        })
+    return response
+
+# MYSQL call to get user profile information
+def get_user_profile(connection, userID):
+    cursor = connection.cursor()
+    cursor.execute('SELECT firstName, lastName, username, password, email FROM spendingtrends.logins WHERE ID=' + str(userID))
+    response = []
+    for (firstName, lastName, username, password, email) in cursor:
+        response.append( {
+            'firstName': firstName,
+            'lastName': lastName,
+            'username': username,
+            'password': password,
+            'email': email
         })
     return response
 

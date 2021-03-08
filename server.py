@@ -107,15 +107,19 @@ def login():
 @app.route("/register", methods=['GET', 'POST'])
 def register():
     msg = ''
-    if request.method == "POST" and 'username' in request.form and 'password' in request.form and 'email' in request.form:
+    if request.method == "POST" and 'username' in request.form:
+        firstName = request.form['firstName']
+        lastName = request.form['lastName']
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
-        spending_dao.create_user(connection, username, password, email)
+        spending_dao.create_user(connection, firstName, lastName, username, password, email)
         return redirect(url_for("login"))
     if request.method == "POST":
         msg = "Please complete the registration fields"
         return render_template("register.html", msg=msg)
+    if request.method == "GET" and session.get('id') == True:
+        return redirect(url_for("home"))
 
     return render_template("register.html", msg=msg)
 
@@ -133,7 +137,7 @@ def logout():
 # Charting page. Used to visualize user data.
 @app.route("/charts", methods=["GET"])
 def charts():
-    if session.get('id') == True:
+    if session.get('id'):
         pie_category = spending_dao.get_pie_category(connection, session['id'])
         pie_vendor = spending_dao.get_pie_vendor(connection, session['id'])
         pie_card = spending_dao.get_pie_card(connection, session['id'])
@@ -144,8 +148,10 @@ def charts():
 # User profile page. User can edit profile info as needed.
 @app.route("/profile", methods=["GET", "POST"])
 def profile():
-    if session.get('id') == True:
-        return render_template("profile.html")
+    if session.get('id'):
+        user_info = spending_dao.get_user_profile(connection, session['id'])
+        print(user_info)
+        return render_template("profile.html", user_info=user_info)
     else:
         return redirect(url_for("login"))
 
